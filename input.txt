@@ -1,0 +1,10 @@
+int a,b,c,d = 0 ;++
+if(a>=b){
+ switch(c-d)
+ case 1: 
+  	d=90;
+ 	break;
+ case 2:
+ 	d = 7;
+ 	break;	
+}
