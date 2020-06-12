@@ -9,7 +9,8 @@ import java.io.LineNumberReader;
 
 public class Analyze {
 	String[] inputLines;
-	String[] keyWord= {"begin","end","if","then","else","for","while","do","and","or","not"};
+	String[] keyWord= {"begin","end","if","then","else","for","while","do","and","or","not",
+						"switch","case","int"};
 	
 	Analyze (String[] lines) {
 		inputLines = lines;
@@ -35,13 +36,11 @@ public class Analyze {
 					||str.charAt(0)=='_') {
 					 continue;
 				 }else {
-					 System.out.println("不是ID");
 					 return false;
 				 }
 			}
 			return true;
 		}else {	
-			System.out.println("第一个字母不是_字母出错！");
 			return false;
 		}	
 	}
@@ -55,36 +54,34 @@ public class Analyze {
 		return false;
 	}
 	
-	public void determineType(String str) throws IOException {
+	public String determineType(String str, int j) throws IOException {
 //		System.out.println(str);
 		if(Character.isDigit(str.charAt(0))) {//数字
 			if(isNum(str)) {
 				System.out.println("< "+ str +" , digit>");
-				new WriteFile(String.valueOf(str),"digital");
-				return;
+				return "< "+ str +" , digit>";
 			}else {
-				System.out.println("数字错误！");
-				return;
+				System.out.println("第"+(j+1)+"行 数字错误！");
+				return "第"+(j+1)+"行 数字错误！";
 			}
 		}else {
 			if(isID(str)) {
 				if(isKeyWord(str)) {//keyword
 					System.out.println("< "+ str +" , key word>");
-					new WriteFile(String.valueOf(str),"key word");
-					return;
+					return "< "+ str +" , key word>";
 				}else {//ID
 					System.out.println("< "+ str +" , ID>");
-					new WriteFile(String.valueOf(str),"ID");
-					return;
+					return "< "+ str +" , ID>";
 				}
 			}else {
-				System.out.println("ID错误！");
-				return;
+				System.out.println("第"+(j+1)+"行ID错误！");
+				return "第"+(j+1)+"行ID错误！";
 			}
 		}
 	}
-	public void scan(String str) throws IOException{
+	public String scan(String str, int j) throws IOException{
 //		System.out.println(str);
+		WriteFile w = new WriteFile();
 		if(str.length()>0) {//防止空串
 			int temp = 0;
 			String sTemp;
@@ -95,10 +92,10 @@ public class Analyze {
 					case '=':
 						sTemp =str.substring(temp,i) ;
 						if(sTemp.length() > 0) {
-							determineType(sTemp);
+							w.write(determineType(sTemp, j));
 						}
 						System.out.println("< "+str.charAt(i)+" , 运算符>");
-						new WriteFile(String.valueOf(str.charAt(i)),"运算符");
+						w.write("< "+str.charAt(i)+" , 运算符>");
 						temp = i + 1;
 						break;
 					case '[':
@@ -113,25 +110,34 @@ public class Analyze {
 					case ','://单目运算符
 						sTemp =str.substring(temp,i);
 						if(sTemp.length() > 0) {
-							determineType(sTemp);
+							w.write(determineType(sTemp, j));
 						}
 						System.out.println("< "+str.charAt(i)+" , 分界符>");
-						new WriteFile(String.valueOf(str.charAt(i)),"分界符");
+						w.write("< "+str.charAt(i)+" , 分界符>");
 						temp = i + 1 ;
 						break;
+					case '#':
+						sTemp =str.substring(temp,i);
+						if(sTemp.length() > 0) {
+							w.write(determineType(sTemp, j));
+						}
+						System.out.println("< # , 注释符>");
+						w.write(" # , 注释符>");
+						sTemp =str.substring(i+1,str.length());
+						return " "+ sTemp;
 					case '+':
 						sTemp =str.substring(temp,i);
 						if(sTemp.length() > 0) {
-							determineType(sTemp);
+							w.write(determineType(sTemp, j));
 						}
 						if(i+1 > str.length()) {//防止数组越界
 							if(str.charAt(i+1) == '+') {//双目++								
 								System.out.println("< ++ " + ", 运算符>");
-								new WriteFile(String.valueOf("++"),"运算符");
+								w.write("< ++ " + ", 运算符>");
 								i ++;
 							}else {//单目+
 								System.out.println("< + ，" + ", 运算符>");
-								new WriteFile(String.valueOf("++"),"运算符");
+								w.write("< + ，" + ", 运算符>");
 							}	
 						}
 						temp = i + 1;
@@ -139,16 +145,16 @@ public class Analyze {
 					case '-'://--				
 						sTemp =str.substring(temp,i);
 						if(sTemp.length() > 0) {
-							determineType(sTemp);
+							w.write(determineType(sTemp, j));
 						}
 						if(i+1 > str.length()) {
 							if(str.charAt(i+1) == '-') {//双目--								
 								System.out.println("< -- " + ", 运算符>");
-								new WriteFile(String.valueOf("--"),"运算符");
+								w.write("< -- " + ", 运算符>");
 								i ++;
 							}else {//单目-
 								System.out.println("< - ，" + ", 运算符>");
-								new WriteFile(String.valueOf("-"),"运算符");
+								w.write("< - ，" + ", 运算符>");
 							}	
 						}
 						temp = i + 1;
@@ -156,16 +162,16 @@ public class Analyze {
 					case '>':
 						sTemp =str.substring(temp,i);
 						if(sTemp.length() > 0) {
-							determineType(sTemp);
+							w.write(determineType(sTemp, j));
 						}
 						if(i+1 > str.length()) {
 							if(str.charAt(i+1) == '=') {//双目>=								
 								System.out.println("< >= " + ", 运算符>");
-								new WriteFile(String.valueOf(">="),"运算符");
+								w.write("< >= " + ", 运算符>");
 								i ++;
 							}else {//单目>
 								System.out.println("< > ，" + ", 分隔符>");
-								new WriteFile(String.valueOf(">"),"运算符");
+								w.write("< > ，" + ", 分隔符>");
 							}	
 						}
 						temp = i + 1;
@@ -173,20 +179,20 @@ public class Analyze {
 					case '<'://<= //<>
 						sTemp =str.substring(temp,i);
 						if(sTemp.length() > 0) {
-							determineType(sTemp);
+							w.write(determineType(sTemp, j));
 						}
 						if(i+1 > str.length()) {
 							if(str.charAt(i+1) == '=') {//双目<=								
 								System.out.println("< <= " + ", 运算符>");
-								new WriteFile(String.valueOf("<="),"运算符");
+								w.write("< <= " + ", 运算符>");
 								i ++;
 							}else if(str.charAt(i+1) == '=') {//双目<>								
 								System.out.println("< <> " + ", 运算符>");
-								new WriteFile(String.valueOf("<>"),"运算符");
+								w.write("< <> " + ", 运算符>");
 								i ++;
 							}else{//单目<
 								System.out.println("< < ，" + ", 分隔符>");
-								new WriteFile(String.valueOf("<"),"分隔符");
+								w.write("< < ，" + ", 分隔符>");
 							}	
 						}
 						temp = i + 1;
@@ -194,16 +200,16 @@ public class Analyze {
 					case ':'://:=
 						sTemp =str.substring(temp,i);
 						if(sTemp.length() > 0) {
-							determineType(sTemp);
+							w.write(determineType(sTemp, j));
 						}
 						if(i+1 > str.length()) {
 							if(str.charAt(i+1) == '=') {//双目:=								
 								System.out.println("< := " + ", 运算符>");
-								new WriteFile(String.valueOf(":="),"运算符");
+								w.write("< := " + ", 运算符>");
 								i ++;
 							}else {
 								System.out.println("< : ，" + ", 分隔符>");
-								new WriteFile(String.valueOf(":"),"分隔符");
+								w.write("< : ，" + ", 分隔符>");
 							}	
 						}
 						temp = i + 1;
@@ -211,26 +217,43 @@ public class Analyze {
 				}		
 			}
 			if(temp == 0) {//该符号串没有运算符和分隔符
-				determineType(str);
-			}			
+				w.write(determineType(str, j));;
+			}
 		}
+		w.close();
+		return "";
+	}
+	public static void remark(String str) throws IOException {
+		
+		WriteFile w = new WriteFile();
+		w.write("<"+ str +",注释内容 >");
+		System.out.println("<"+ str +",注释内容 >");
+		w.close();
 	}
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub		
 		ReadFile readFile = new ReadFile();
 		Analyze analyze = new Analyze(readFile.lines);
-//		analyze.writeFile'
 		
 		for(int i = 0; i < analyze.inputLines.length; i ++) {
 //			System.out.println(analyze.inputLines[i]);
 			String lines = analyze.inputLines[i].replaceAll("\\s+", " ");//将每行空白用空格代替
 			String [] symbolStr = lines.split(" ");
 //			System.out.println("第"+(i+1)+"行");
+			String annotation = null;
 			for(int j = 0; j < symbolStr.length; j ++) {//某行的某个符号串
 //				System.out.print(symbolStr[j]+" ");
-				analyze.scan(symbolStr[j]);
+				annotation = analyze.scan(symbolStr[j], i);
+				if(annotation.length()>0) {
+					for(int k = j+1; k < symbolStr.length; k ++) {
+						annotation +=symbolStr[k];
+					}
+					remark(annotation);
+					break;
+				}
 			}
+			
 		}
 	}
 }
@@ -269,14 +292,19 @@ class ReadFile{
 
 class WriteFile{
 	BufferedWriter output;
-	WriteFile(String str,String type) {
+	WriteFile() {
 		try {
-			output = new BufferedWriter(new FileWriter("output.txt",true ));
-			output.write("< "+ str +" , "+ type +  " >");
-			output.newLine();
-			output.close();
+			output = new BufferedWriter(new FileWriter("output.txt",true));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public void write(String type) throws IOException {
+		output.write(type);
+		output.newLine();
+	}
+	public void close() throws IOException {
+		output.flush();
+		output.close();
 	}
 }
