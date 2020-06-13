@@ -49,7 +49,6 @@ public class LL1Analyze {
 		char strFirst;
 		while(!stack.empty()) {
 			stackTop = stack.peek();
-			System.out.println(stackTop);
 			strFirst = inputStr.charAt(ip);
 //			String  vt = stack.peek();
 			if(stack.peek() == '#') {//弹出空串
@@ -57,6 +56,7 @@ public class LL1Analyze {
 			}else {
 				if(isVT(stack.peek())) {//栈顶是VT
 					if(stackTop == strFirst) {
+						System.out.println("匹配" + stackTop);
 						stack.pop();
 						ip ++;
 					}else {//错误3 栈顶终结符与输入符不同
@@ -72,7 +72,6 @@ public class LL1Analyze {
 							for(int i = rightPart.length()-1; i >= 0 ;i --) {//右部倒序入栈
 								stack.push(rightPart.charAt(i));
 							}
-							System.out.println(stack);
 							System.out.println(part);//输出产生式
 						}else {//错误2 查到synch
 							System.out.println("已弹出栈顶A");
@@ -85,12 +84,12 @@ public class LL1Analyze {
 				}
 			}
 		}
-		System.out.println("完了！");
+		System.out.println("分析完毕！");
 	}
 	
 	public static void main(String[] args ){
 		// TODO Auto-generated method stub		
-		LL1Analyze LL1 = new LL1Analyze("i+i)$");
+		LL1Analyze LL1 = new LL1Analyze("i*(i+i)$");
 //		System.out.println(LL1.stack.peek());
 		LL1.analyze();
 
