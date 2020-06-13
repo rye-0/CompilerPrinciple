@@ -89,7 +89,7 @@ public class LL1Analyze {
 	
 	public static void main(String[] args ){
 		// TODO Auto-generated method stub		
-		LL1Analyze LL1 = new LL1Analyze("i*(i+i)$");
+		LL1Analyze LL1 = new LL1Analyze("i*(i+i)+(i/i)$");
 //		System.out.println(LL1.stack.peek());
 		LL1.analyze();
 

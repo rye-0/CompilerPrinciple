@@ -1,6 +1,7 @@
 < utf-8,注释内容 >
-第2行 数字错误！
-< int , ID>
+< if , key word>
+第3行 数字错误！
+< int , key word>
 < a , ID>
 < , , 分界符>
 < b , ID>
@@ -10,19 +11,19 @@
 < = , 运算符>
 < 0 , digit>
 < ; , 分界符>
-< if , ID>
+< if , key word>
 < ( , 分界符>
 < a , ID>
 < = , 运算符>
 < b , ID>
 < ) , 分界符>
 < { , 分界符>
-< switch , ID>
+< switch , key word>
 < ( , 分界符>
 < c , ID>
 < d , ID>
 < ) , 分界符>
-< case , ID>
+< case , key word>
 < 1 , digit>
 < d , ID>
 < = , 运算符>
@@ -30,7 +31,7 @@
 < ; , 分界符>
 < break , ID>
 < ; , 分界符>
-< case , ID>
+< case , key word>
 < 2 , digit>
 < d , ID>
 < = , 运算符>
@@ -39,10 +40,10 @@
 < break , ID>
 < ; , 分界符>
 < } , 分界符>
-第13行ID错误！
 < utf-8,注释内容 >
-第2行 数字错误！
-< int , ID>
+< if , key word>
+第3行 数字错误！
+< int , key word>
 < a , ID>
 < , , 分界符>
 < b , ID>
@@ -52,19 +53,19 @@
 < = , 运算符>
 < 0 , digit>
 < ; , 分界符>
-< if , ID>
+< if , key word>
 < ( , 分界符>
 < a , ID>
 < = , 运算符>
 < b , ID>
 < ) , 分界符>
 < { , 分界符>
-< switch , ID>
+< switch , key word>
 < ( , 分界符>
 < c , ID>
 < d , ID>
 < ) , 分界符>
-< case , ID>
+< case , key word>
 < 1 , digit>
 < d , ID>
 < = , 运算符>
@@ -72,7 +73,7 @@
 < ; , 分界符>
 < break , ID>
 < ; , 分界符>
-< case , ID>
+< case , key word>
 < 2 , digit>
 < d , ID>
 < = , 运算符>
@@ -81,46 +82,3 @@
 < break , ID>
 < ; , 分界符>
 < } , 分界符>
-第13行ID错误！
-< utf-8,注释内容 >
-第2行 数字错误！
-< int , ID>
-< a , ID>
-< , , 分界符>
-< b , ID>
-< , , 分界符>
-< c , ID>
-< , , 分界符>
-< = , 运算符>
-< 0 , digit>
-< ; , 分界符>
-< if , ID>
-< ( , 分界符>
-< a , ID>
-< = , 运算符>
-< b , ID>
-< ) , 分界符>
-< { , 分界符>
-< switch , ID>
-< ( , 分界符>
-< c , ID>
-< d , ID>
-< ) , 分界符>
-< case , ID>
-< 1 , digit>
-< d , ID>
-< = , 运算符>
-< 90 , digit>
-< ; , 分界符>
-< break , ID>
-< ; , 分界符>
-< case , ID>
-< 2 , digit>
-< d , ID>
-< = , 运算符>
-< 7 , digit>
-< ; , 分界符>
-< break , ID>
-< ; , 分界符>
-< } , 分界符>
-第13行ID错误！

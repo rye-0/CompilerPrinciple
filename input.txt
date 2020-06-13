@@ -1,4 +1,5 @@
 #utf-8
+if
 8sd
 int a,b,c,d = 0 ;++
 if(a>=b){
@@ -10,4 +11,3 @@ if(a>=b){
  	d = 7;
  	break;	
 }
-&4

@@ -47,7 +47,7 @@ public class Analyze {
 	
 	public boolean  isKeyWord(String str){
 		for(int i = 0; i < keyWord.length; i ++) {
-			if (keyWord[i] == str){
+			if (keyWord[i].equals(str)){
 				return true;
 			}
 		}

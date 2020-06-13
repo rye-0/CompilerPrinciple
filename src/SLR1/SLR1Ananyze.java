@@ -82,11 +82,19 @@ public class SLR1Ananyze {
 				String Sm_r = stack.peek();
 				String vn = p.getLeftPart(n);
 				stack.push(vn);						//push P左部
-				String gotoS = gotoTable(Sm_r, vn); 
-				stack.push(gotoS);					//push Goto
-				System.out.println(p.getPart(n));
+				String gotoS = gotoTable(Sm_r, vn);
+				if(!gotoS.equals("false")) {
+					stack.push(gotoS);					//push Goto
+					System.out.println(p.getPart(n));
+				}else {
+					System.out.println("查goto表错误！");
+					return;
+				}
 			}else if(actionTable(stackTop,strFirst) == "ACC"){
 				System.out.println("结束！");
+				return;
+			}else {
+				System.out.println("查action表错误！");
 				return;
 			}
 				
@@ -96,7 +104,7 @@ public class SLR1Ananyze {
 	
 	public static void main(String[] args ){
 		// TODO Auto-generated method stub
-		String[] str = {"i","=","i","$"};
+		String[] str = {"i","=","i","+","i","$"};
 		SLR1Ananyze slr = new SLR1Ananyze(str);
 		slr.analyze();
 		
@@ -129,10 +137,10 @@ class Table{
 						{""  ,""  ,"R7","R7" ,"R7" ,"R7" ,""  ,"R7" ,"R7" },
 						{""  ,""  ,"R4","R4" ,"S13","S14",""  ,"R4" ,"R4" },
 						{""  ,""  ,"R9","R9" ,"R9" ,"R9" ,""  ,"R9" ,"R9" },
-						{""  ,""  ,""  ,""   ,""   ,""   ,""  ,""   ,""   },
-						{""  ,""  ,""  ,""   ,""   ,""   ,""  ,""   ,""   },
+						{""  ,"S7",""  ,""   ,""   ,""   ,"S8",""   ,""   },
+						{""  ,"S7",""  ,""   ,""   ,""   ,"S8",""   ,""   },
 						{""  ,""  ,"R2","R2" ,"S13","S14",""  ,"R2" ,"R2" },
-						{""  ,""  ,""  ,""   ,""   ,""   ,""  ,""   ,""   },
+						{""  ,"S7",""  ,""   ,""   ,""   ,"S8",""   ,""   },
 						{""  ,""  ,"R3","R3" ,"S13","S14",""  ,"R3" ,"R3" },
 						{""  ,"S7",""  ,""   ,""   ,""   ,"S8",""   ,""   },
 						{""  ,"S7",""  ,""   ,""   ,""   ,"S8",""   ,""   },
@@ -149,7 +157,7 @@ class Table{
 							{"" ,""  ,""  ,""  },
 							{"" ,""  ,""  ,""  },
 							{"" ,""  ,""  ,""  },
-							{"" ,"17","6" ,""  },
+							{"" ,"17","6" ,"5"  },
 							{"" ,""  ,"10","5" },
 							{"" ,""  ,""  ,""  },
 							{"" ,""  ,"12","5" },
